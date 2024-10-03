@@ -1,6 +1,6 @@
 name: Push-to-EC2
 
-# Trigger deployment only on push to the main branch
+# Trigger deployment only on push to main branch
 on:
   push:
     branches:
@@ -38,13 +38,12 @@ jobs:
             sudo apt-get install -y apache2
             sudo systemctl start apache2
             sudo systemctl enable apache2
-            
+
             # Clean the target directory before copying new files
-            sudo rm -rf /var/www/whiskylaravel/*
-            sudo rm -rf /var/www/whiskylaravel/.*
+            sudo rm -rf /var/www/whiskylaravel/* /var/www/whiskylaravel/.*
             
-            # Copy files from the home directory to the target
-            sudo cp -r ~/github/workspace/* /var/www/whiskylaravel/
+            # Copy files from the GitHub Actions workspace to the target directory
+            sudo cp -r ~/github/actions-runner/_work/repo_name/repo_name/* /var/www/whiskylaravel/
             
             # Set correct permissions
             sudo chown -R www-data:www-data /var/www/whiskylaravel
